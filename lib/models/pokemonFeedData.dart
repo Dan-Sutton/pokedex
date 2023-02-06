@@ -14,7 +14,7 @@ class PokemonFeedData with ChangeNotifier {
 
   Future<void> get fetchData async {
     final response = await get(
-      Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0'),
+      Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=1&offset=0'),
     );
 
     if (response.statusCode == 200) {

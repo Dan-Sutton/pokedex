@@ -20,7 +20,6 @@ class _PokemonTileState extends State<PokemonTile> {
     bool _error = false;
     String _errorMessage = "";
 
-    @override
     void getPokeData() async {
       final response = await get(
         Uri.parse('${widget.tileData['url']}'),
@@ -32,7 +31,6 @@ class _PokemonTileState extends State<PokemonTile> {
             loading = false;
             pokeData = jsonDecode(response.body);
           });
-          print(loading);
         } catch (e) {
           _error = true;
           _errorMessage = e.toString();
@@ -49,7 +47,9 @@ class _PokemonTileState extends State<PokemonTile> {
       }
     }
 
-    getPokeData();
+    if (loading) {
+      getPokeData();
+    }
 
     return loading
         ? Center(child: CircularProgressIndicator())

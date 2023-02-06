@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 
 class PokemonFeedData with ChangeNotifier {
   Map<String, dynamic> _map = {};
+
   bool _error = false;
   String _errorMessage = "";
 
@@ -14,12 +15,13 @@ class PokemonFeedData with ChangeNotifier {
 
   Future<void> get fetchData async {
     final response = await get(
-      Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=1&offset=0'),
+      Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=10'),
     );
 
     if (response.statusCode == 200) {
       try {
         _map = jsonDecode(response.body);
+
         _error = false;
       } catch (e) {
         _error = true;

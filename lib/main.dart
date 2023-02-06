@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/models/pokemonFeedData.dart';
 import 'package:pokedex/pages/home.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,9 +12,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      home: ChangeNotifierProvider(
+        builder: (context, child) {
+          return Home();
+        },
+        create: (context) => PokemonFeedData(),
+      ),
     );
   }
 }

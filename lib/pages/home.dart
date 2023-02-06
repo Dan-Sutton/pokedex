@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
                 : ListView.builder(
                     itemCount: value.map['results'].length,
                     itemBuilder: (context, index) {
-                      return Text('Hello');
+                      return Text('${value.map['results'][index]['name']}');
                     });
       }),
     ));

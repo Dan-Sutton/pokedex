@@ -8,6 +8,10 @@ class PokemonFeedData with ChangeNotifier {
   bool _error = false;
   String _errorMessage = "";
 
+  Map<String, dynamic> get map => _map;
+  bool get error => _error;
+  String get errorMessage => _errorMessage;
+
   Future<void> get fetchData async {
     final response = await get(
       Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0'),

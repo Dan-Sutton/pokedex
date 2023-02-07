@@ -13,7 +13,7 @@ class PokemonFeedData with ChangeNotifier {
   List<PokeModel> pokeList = [];
 
   Future<void> getHomeData() async {
-    int pokeNumber = 10;
+    int pokeNumber = 21;
 
     List<PokeModel> tempList = [];
     isRequestError = false;

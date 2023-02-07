@@ -52,9 +52,18 @@ class _HomeState extends State<Home> {
                       child: ListView(
                         children: [
                           Column(
-                            children: pokeData
-                                .map((item) => PokeTile(item, context))
-                                .toList(),
+                            children: pokeData.asMap().entries.map((
+                              item,
+                            ) {
+                              if (item.key == pokeData.length - 1) {
+                                return Image.network(
+                                  'https://i.imgur.com/rbMq6sW.gif',
+                                  scale: 7,
+                                );
+                              } else {
+                                return PokeTile(item.value, context);
+                              }
+                            }).toList(),
                           ),
                         ],
                       ),

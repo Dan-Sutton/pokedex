@@ -16,7 +16,6 @@ class PokeTile extends StatelessWidget {
         padding: EdgeInsets.all(15),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20), color: Colors.red),
-        width: MediaQuery.of(context).size.width,
         child: Stack(
           clipBehavior: Clip.none,
           children: [

@@ -22,9 +22,14 @@ class PokeTile extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '# ${poke.id}',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+                Row(
+                  children: [
+                    Text(
+                      '# ${poke.id}',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+                    ),
+                  ],
                 ),
                 Text(
                   poke.name,
@@ -45,13 +50,20 @@ class PokeTile extends StatelessWidget {
               ],
             ),
             Positioned(
-              right: 0,
-              bottom: -20,
+              right: 30,
+              bottom: -35,
               child: Image.network(
                 poke.image,
-                scale: 0.9,
+                scale: 0.7,
               ),
             ),
+            Positioned(
+              right: 0,
+              child: Icon(
+                Icons.favorite_border_outlined,
+                size: 30,
+              ),
+            )
           ],
         ),
       ),

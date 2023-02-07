@@ -16,7 +16,7 @@ class PokeMoves extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
+              const Padding(
                 padding: const EdgeInsets.only(bottom: 20.0),
                 child: Text(
                   'Moves',

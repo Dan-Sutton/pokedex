@@ -64,20 +64,39 @@ class _PokeInfoState extends State<PokeInfo> {
                       Container(
                         width: double.infinity,
                         height: 230,
-                        child: Image.network(
-                            '${pokeInfo['sprites']['front_default']}',
-                            scale: 0.1, frameBuilder: (context, child, frame,
-                                wasSynchronouslyLoaded) {
-                          return child;
-                        }, loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          } else {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        }),
+                        child: Stack(
+                            alignment: AlignmentDirectional.center,
+                            children: [
+                              Positioned(
+                                  left: 20,
+                                  top: 20,
+                                  child: Text('#${widget.data.id}',
+                                      style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.w800))),
+                              Positioned(
+                                  right: 20,
+                                  top: 20,
+                                  child: Icon(
+                                    Icons.favorite_border_outlined,
+                                    size: 33,
+                                  )),
+                              Image.network(
+                                  '${pokeInfo['sprites']['front_default']}',
+                                  scale: 0.1, frameBuilder: (context, child,
+                                      frame, wasSynchronouslyLoaded) {
+                                return child;
+                              }, loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                } else {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                              }),
+                            ]),
                       ),
                       const Divider(
                         color: Color(0xFF63747A),

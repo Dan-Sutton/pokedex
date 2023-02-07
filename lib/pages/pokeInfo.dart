@@ -45,7 +45,13 @@ class _PokeInfoState extends State<PokeInfo> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: widget.color,
-          title: Text("${widget.data.name}".capitalize()),
+          title: Text(
+            "${widget.data.name}".capitalize(),
+            style: TextStyle(
+              fontWeight: FontWeight.w800,
+              fontSize: 35,
+            ),
+          ),
           leading: GestureDetector(
               onTap: () {
                 Navigator.pop(context);
@@ -120,8 +126,27 @@ class _PokeInfoState extends State<PokeInfo> {
                           autoPlay: false,
                           enlargeCenterPage: true,
                           viewportFraction: 1,
-                          aspectRatio: 0.87,
+                          aspectRatio: 0.95,
                           initialPage: 0,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Icon(
+                              Icons.circle,
+                              size: 20,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Icon(
+                                Icons.circle,
+                                size: 20,
+                              ),
+                            ),
+                          ],
                         ),
                       )
                     ],

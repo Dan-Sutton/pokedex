@@ -21,8 +21,14 @@ class TextPill extends StatelessWidget {
     return Container(
         width: width,
         padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15), color: color),
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.4),
+            spreadRadius: 3,
+            blurRadius: 4,
+            offset: Offset(0, 2), // changes position of shadow
+          ),
+        ], borderRadius: BorderRadius.circular(15), color: color),
         child: Center(
           child: Text(
             text,

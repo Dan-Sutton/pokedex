@@ -76,7 +76,7 @@ class _PokeInfoState extends State<PokeInfo> {
                           }
                         }),
                       ),
-                      Divider(
+                      const Divider(
                         color: Color(0xFF63747A),
                         thickness: 2,
                         endIndent: 20,

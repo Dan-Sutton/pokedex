@@ -1,38 +1,41 @@
-import 'dart:convert';
+import 'dart:developer';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:flutterdex/models/card_model.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class PokemonFeedData with ChangeNotifier {
-  Map<String, dynamic> _map = {};
+import 'package:flutterdex/models/pokemon.dart';
 
-  bool _error = false;
-  String _errorMessage = "";
+class PoemonFeedData with ChangeNotifier {
+  bool isLoading;
+  bool isRequestError = false;
+  List<CardModel> pokeList = [];
+  List<Pokemon> descList = [];
+  Pokemon pokemon = Pokemon();
 
-  Map<String, dynamic> get map => _map;
-  bool get error => _error;
-  String get errorMessage => _errorMessage;
+  Future<void> getHomeData() async {
+    int pokeNumber = 151;
 
-  Future<void> get fetchData async {
-    final response = await get(
-      Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=10'),
-    );
-
-    if (response.statusCode == 200) {
+    List<CardModel> tempList = [];
+    isRequestError = false;
+    for (int index = 1; index <= pokeNumber; index++) {
       try {
-        _map = jsonDecode(response.body);
-
-        _error = false;
+        isLoading = true;
+        Uri url = Uri.parse('https://pokeapi.co/api/v2/pokemon/$index');
+        final response = await http.get(url);
+        final responseData = json.decode(response.body) as Map<String, dynamic>;
+        tempList.add(CardModel.fromJson(responseData));
       } catch (e) {
-        _error = true;
-        _errorMessage = e.toString();
-        _map = {};
+        throw (e);
       }
-    } else {
-      _error = true;
-      _errorMessage = 'Something went wrong.';
-      _map = {};
     }
-    notifyListeners();
+    if (tempList.length == pokeNumber) {
+      pokeList = tempList;
+      isLoading = false;
+      notifyListeners();
+      inspect(pokeList);
+    }
   }
 }

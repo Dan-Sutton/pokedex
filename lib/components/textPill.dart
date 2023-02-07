@@ -8,13 +8,15 @@ class TextPill extends StatelessWidget {
   final Color textColor;
   final double fontSize;
   final double width;
+  final String? subtitle;
   const TextPill(
       {super.key,
       required this.text,
       required this.color,
       required this.textColor,
       this.fontSize = 20,
-      this.width = 110});
+      this.width = 110,
+      this.subtitle});
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +32,26 @@ class TextPill extends StatelessWidget {
           ),
         ], borderRadius: BorderRadius.circular(15), color: color),
         child: Center(
-          child: Text(
-            text,
-            style: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.w600,
-                color: textColor),
+          child: Column(
+            children: [
+              
+              Text(
+                text,
+                style: TextStyle(
+                    fontSize: fontSize,
+                    fontWeight: FontWeight.w600,
+                    color: textColor),
+              ),
+              subtitle != null
+                  ? Text(
+                      subtitle!,
+                      style: TextStyle(
+                          fontSize: fontSize - 2,
+                          fontWeight: FontWeight.w400,
+                          color: textColor),
+                    )
+                  : Container()
+            ],
           ),
         ));
   }

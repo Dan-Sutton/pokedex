@@ -91,14 +91,17 @@ class _PokeInfoState extends State<PokeInfo> {
                             color: widget.color,
                             pokeInfo: pokeInfo,
                           ),
-                          PokeMoves(),
+                          PokeMoves(
+                            pokeInfo: pokeInfo,
+                            color: widget.color,
+                          ),
                         ],
                         options: CarouselOptions(
                           enlargeFactor: 0,
                           autoPlay: false,
                           enlargeCenterPage: true,
                           viewportFraction: 1,
-                          aspectRatio: 1.0,
+                          aspectRatio: 0.87,
                           initialPage: 0,
                         ),
                       )

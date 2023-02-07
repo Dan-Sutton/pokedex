@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:pokedex/helpers/stringExtension.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import '../models/pokemonFeedData.dart';
@@ -40,7 +41,7 @@ class _PokeInfoState extends State<PokeInfo> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: widget.color,
-          title: Text(widget.data.name),
+          title: Text("${widget.data.name}".capitalize()),
           leading: GestureDetector(
               onTap: () {
                 Navigator.pop(context);
@@ -66,7 +67,7 @@ class _PokeInfoState extends State<PokeInfo> {
                         if (loadingProgress == null) {
                           return child;
                         } else {
-                          return Center(
+                          return const Center(
                             child: CircularProgressIndicator(),
                           );
                         }
@@ -76,7 +77,20 @@ class _PokeInfoState extends State<PokeInfo> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: pokeInfo['types'].map<Widget>((type) {
                           return Container(
-                              child: Text('${type['type']['name']}'));
+                              width: 110,
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: widget.color),
+                              child: Center(
+                                child: Text(
+                                  '${type['type']['name']}',
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white),
+                                ),
+                              ));
                         }).toList()),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

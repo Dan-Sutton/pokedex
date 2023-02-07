@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/helpers/stringExtension.dart';
 import 'package:pokedex/pages/pokeInfo.dart';
-
 import '../helpers/pokeTypeColor.dart';
 
 class PokeTile extends StatelessWidget {
@@ -16,10 +16,8 @@ class PokeTile extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => PokeInfo(
-                      data: poke,
-                      color: setTileColor(poke.type1)
-                    )));
+                builder: (context) =>
+                    PokeInfo(data: poke, color: setTileColor(poke.type1))));
       },
       child: Container(
         height: 100,
@@ -44,7 +42,7 @@ class PokeTile extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  poke.name,
+                  '${poke.name}'.capitalize(),
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 25,

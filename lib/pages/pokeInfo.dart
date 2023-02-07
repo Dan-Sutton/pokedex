@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex/components/pokeAbout.dart';
+import 'package:pokedex/components/pokeMoves.dart';
 import 'package:pokedex/components/textPill.dart';
 import 'package:pokedex/helpers/stringExtension.dart';
 import 'package:provider/provider.dart';
@@ -89,7 +90,8 @@ class _PokeInfoState extends State<PokeInfo> {
                           PokeAbout(
                             color: widget.color,
                             pokeInfo: pokeInfo,
-                          )
+                          ),
+                          PokeMoves(),
                         ],
                         options: CarouselOptions(
                           enlargeFactor: 0,
@@ -97,7 +99,7 @@ class _PokeInfoState extends State<PokeInfo> {
                           enlargeCenterPage: true,
                           viewportFraction: 1,
                           aspectRatio: 1.0,
-                          initialPage: 1,
+                          initialPage: 0,
                         ),
                       )
                     ],

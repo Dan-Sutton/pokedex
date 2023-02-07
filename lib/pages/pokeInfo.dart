@@ -63,7 +63,7 @@ class _PokeInfoState extends State<PokeInfo> {
                         height: 230,
                         child: Image.network(
                             '${pokeInfo['sprites']['front_default']}',
-                            scale: 0.3, frameBuilder: (context, child, frame,
+                            scale: 0.1, frameBuilder: (context, child, frame,
                                 wasSynchronouslyLoaded) {
                           return child;
                         }, loadingBuilder: (context, child, loadingProgress) {
@@ -75,6 +75,12 @@ class _PokeInfoState extends State<PokeInfo> {
                             );
                           }
                         }),
+                      ),
+                      Divider(
+                        color: Color(0xFF63747A),
+                        thickness: 2,
+                        endIndent: 20,
+                        indent: 20,
                       ),
                       const Padding(
                         padding: const EdgeInsets.only(bottom: 10.0),

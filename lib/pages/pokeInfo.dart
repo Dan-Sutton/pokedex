@@ -47,6 +47,15 @@ class _PokeInfoState extends State<PokeInfo> {
         ),
         body: pokeInfo.isEmpty
             ? CircularProgressIndicator()
-            : Container(child: Text('${pokeInfo['height']}')));
+            : Container(
+                width: double.infinity,
+                child: Column(
+                  children: [
+                    Image.network(
+                      '${pokeInfo['sprites']['front_default']}',
+                      scale: 0.3,
+                    ),
+                  ],
+                )));
   }
 }

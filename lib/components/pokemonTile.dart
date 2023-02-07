@@ -65,11 +65,16 @@ class PokeTile extends StatelessWidget {
                 scale: 0.7,
               ),
             ),
-            const Positioned(
+            Positioned(
               right: 0,
-              child: Icon(
-                Icons.favorite_border_outlined,
-                size: 30,
+              child: GestureDetector(
+                onTap: () {
+                  print('Liked');
+                },
+                child: Icon(
+                  Icons.favorite_border_outlined,
+                  size: 30,
+                ),
               ),
             )
           ],

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:pokedex/components/textPill.dart';
 import 'package:pokedex/helpers/stringExtension.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
@@ -53,58 +54,93 @@ class _PokeInfoState extends State<PokeInfo> {
             : Container(
                 color: widget.color.withOpacity(0.35),
                 width: double.infinity,
-                child: Column(
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      height: 300,
-                      child: Image.network(
-                          '${pokeInfo['sprites']['front_default']}',
-                          scale: 0.3, frameBuilder:
-                              (context, child, frame, wasSynchronouslyLoaded) {
-                        return child;
-                      }, loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) {
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 230,
+                        child: Image.network(
+                            '${pokeInfo['sprites']['front_default']}',
+                            scale: 0.3, frameBuilder: (context, child, frame,
+                                wasSynchronouslyLoaded) {
                           return child;
-                        } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                      }),
-                    ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: pokeInfo['types'].map<Widget>((type) {
-                          return Container(
-                              width: 110,
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: widget.color),
-                              child: Center(
-                                child: Text(
-                                  '${type['type']['name']}',
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white),
-                                ),
-                              ));
-                        }).toList()),
-                    Row(
+                        }, loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        }),
+                      ),
+                      const Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: Text(
+                          'Type',
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: pokeInfo['types'].map<Widget>((type) {
+                            return TextPill(
+                                text: '${type['type']['name']}',
+                                color: widget.color,
+                                textColor: Colors.white);
+                          }).toList()),
+                      const Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0, top: 20),
+                        child: Text(
+                          'Attributes',
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text("Height: ${pokeInfo['height'] / 10}m"),
-                          Text("Weight: ${pokeInfo['weight'] / 10}kg")
-                        ]),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: pokeInfo['abilities'].map<Widget>((ability) {
-                          return Container(
-                              child: Text('${ability['ability']['name']}'));
-                        }).toList()),
-                  ],
+                          TextPill(
+                              fontSize: 18,
+                              text: "Height: ${pokeInfo['height'] / 10}m",
+                              color: Color(0xFF63747A),
+                              textColor: Colors.white),
+                          TextPill(
+                              fontSize: 18,
+                              text: "Weight: ${pokeInfo['weight'] / 10}kg",
+                              color: Color(0xFF63747A),
+                              textColor: Colors.white),
+                        ],
+                      ),
+                      const Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0, top: 20),
+                        child: Text(
+                          'Abilities',
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children:
+                              pokeInfo['abilities'].map<Widget>((ability) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 10.0),
+                              child: Container(
+                                  child: TextPill(
+                                      width: 250,
+                                      fontSize: 18,
+                                      text: '${ability['ability']['name']}'
+                                          .capitalize(),
+                                      color: Color(0xFF63747A),
+                                      textColor: Colors.white)),
+                            );
+                          }).toList()),
+                    ],
+                  ),
                 )));
   }
 }

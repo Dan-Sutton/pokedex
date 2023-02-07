@@ -27,7 +27,7 @@ class PokeTile extends StatelessWidget {
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 25,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
                 SizedBox(height: 5),
@@ -35,7 +35,7 @@ class PokeTile extends StatelessWidget {
                   children: [
                     Text(poke.type1),
                     SizedBox(width: 5),
-                    // Text(poke.type2),
+                    if (poke.type2 != null) Text(poke.type2),
                   ],
                 )
               ],

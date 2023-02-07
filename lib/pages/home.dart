@@ -31,7 +31,7 @@ class _HomeState extends State<Home> {
           children: [
             SafeArea(
               child: Text(
-                'Poké',
+                'PokéDex',
                 style: TextStyle(
                   fontWeight: FontWeight.w800,
                   fontSize: 35,

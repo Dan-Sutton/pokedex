@@ -39,6 +39,7 @@ class _PokeInfoState extends State<PokeInfo> {
     fetchPokeData(widget.data.id);
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: widget.color,
           title: Text(widget.data.name),
           leading: GestureDetector(
               onTap: () {

@@ -55,6 +55,24 @@ class _PokeInfoState extends State<PokeInfo> {
                       '${pokeInfo['sprites']['front_default']}',
                       scale: 0.3,
                     ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: pokeInfo['types'].map<Widget>((type) {
+                          return Container(
+                              child: Text('${type['type']['name']}'));
+                        }).toList()),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text("Height: ${pokeInfo['height'] / 10}m"),
+                          Text("Weight: ${pokeInfo['weight'] / 10}kg")
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: pokeInfo['abilities'].map<Widget>((ability) {
+                          return Container(
+                              child: Text('${ability['ability']['name']}'));
+                        }).toList()),
                   ],
                 )));
   }

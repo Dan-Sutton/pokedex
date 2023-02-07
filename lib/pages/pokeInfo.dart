@@ -26,7 +26,9 @@ class _PokeInfoState extends State<PokeInfo> {
     super.initState();
   }
 
+  CarouselController buttonCarouselController = CarouselController();
   Map pokeInfo = {};
+  int activePage = 0;
 
   void fetchPokeData(index) async {
     Uri url = Uri.parse('https://pokeapi.co/api/v2/pokemon/$index');
@@ -47,7 +49,7 @@ class _PokeInfoState extends State<PokeInfo> {
           backgroundColor: widget.color,
           title: Text(
             "${widget.data.name}".capitalize(),
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.w800,
               fontSize: 35,
             ),
@@ -77,10 +79,10 @@ class _PokeInfoState extends State<PokeInfo> {
                                   left: 20,
                                   top: 20,
                                   child: Text('#${widget.data.id}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 25,
                                           fontWeight: FontWeight.w800))),
-                              Positioned(
+                              const Positioned(
                                   right: 20,
                                   top: 20,
                                   child: Icon(
@@ -121,6 +123,7 @@ class _PokeInfoState extends State<PokeInfo> {
                             color: widget.color,
                           ),
                         ],
+                        carouselController: buttonCarouselController,
                         options: CarouselOptions(
                           enlargeFactor: 0,
                           autoPlay: false,
@@ -128,22 +131,43 @@ class _PokeInfoState extends State<PokeInfo> {
                           viewportFraction: 1,
                           aspectRatio: 0.95,
                           initialPage: 0,
+                          onPageChanged: (page, reason) {
+                            setState(() {
+                              activePage = page;
+                            });
+                          },
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.circle,
-                              size: 20,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                buttonCarouselController.jumpToPage(0);
+                              },
+                              child: Icon(
+                                Icons.circle,
+                                size: activePage == 0 ? 25 : 20,
+                                color: activePage == 0
+                                    ? Colors.white
+                                    : widget.color,
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 8.0),
-                              child: Icon(
-                                Icons.circle,
-                                size: 20,
+                              child: GestureDetector(
+                                onTap: () {
+                                  buttonCarouselController.jumpToPage(1);
+                                },
+                                child: Icon(
+                                  Icons.circle,
+                                  size: activePage == 1 ? 25 : 20,
+                                  color: activePage == 1
+                                      ? Colors.white
+                                      : widget.color,
+                                ),
                               ),
                             ),
                           ],

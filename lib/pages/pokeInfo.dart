@@ -1,4 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:provider/provider.dart';
+
+import '../models/pokemonFeedData.dart';
 
 class PokeInfo extends StatefulWidget {
   final dynamic data;
@@ -11,18 +17,21 @@ class PokeInfo extends StatefulWidget {
 
 class _PokeInfoState extends State<PokeInfo> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    print(widget.data.toString());
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.data.name),
-        leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(Icons.arrow_back_ios)),
-      ),
-      body: Center(child: Text(widget.data.name)),
-    );
+        appBar: AppBar(
+          title: Text(widget.data.name),
+          leading: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(Icons.arrow_back_ios)),
+        ),
+        body: Container());
   }
 }

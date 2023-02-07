@@ -40,7 +40,8 @@ class PokeTile extends StatelessWidget {
                 )
               ],
             ),
-            // Positioned(right: -40, bottom: -40, child: Image.asset(poke.image)),
+            Positioned(
+                right: -40, bottom: -40, child: Image.network(poke.image)),
           ],
         ),
       ),

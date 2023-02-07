@@ -31,7 +31,7 @@ class PokeMoves extends StatelessWidget {
                       width: 250,
                       text: move['move']['name'].toString().capitalize(),
                       subtitle:
-                          'Learned at: ${move['version_group_details'][0]['level_learned_at']}',
+                          'Learn at level: ${move['version_group_details'][0]['level_learned_at']}',
                       color: color,
                       textColor: Colors.white),
                 );

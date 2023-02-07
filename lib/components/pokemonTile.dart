@@ -11,6 +11,11 @@ class PokeTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {},
       child: Container(
+        height: 100,
+        margin: EdgeInsets.all(5),
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20), color: Colors.red),
         width: MediaQuery.of(context).size.width,
         child: Stack(
           clipBehavior: Clip.none,
@@ -41,7 +46,13 @@ class PokeTile extends StatelessWidget {
               ],
             ),
             Positioned(
-                right: -40, bottom: -40, child: Image.network(poke.image)),
+              right: 0,
+              bottom: -20,
+              child: Image.network(
+                poke.image,
+                scale: 0.9,
+              ),
+            ),
           ],
         ),
       ),

@@ -16,10 +16,6 @@ class _HomeState extends State<Home> {
     Provider.of<PokemonFeedData>(context, listen: false).getHomeData();
   }
 
-  Future<void> _refreshData(BuildContext context) async {
-    await Provider.of<PokemonFeedData>(context, listen: false).getHomeData();
-  }
-
   @override
   Widget build(BuildContext context) {
     final data = Provider.of<PokemonFeedData>(context);

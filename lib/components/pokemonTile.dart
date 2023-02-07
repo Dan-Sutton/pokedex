@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/pages/pokeInfo.dart';
 
 class PokeTile extends StatelessWidget {
   final dynamic poke;
@@ -9,7 +10,10 @@ class PokeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => PokeInfo()));
+      },
       child: Container(
         height: 100,
         margin: EdgeInsets.all(5),
@@ -57,7 +61,7 @@ class PokeTile extends StatelessWidget {
                 scale: 0.7,
               ),
             ),
-            Positioned(
+            const Positioned(
               right: 0,
               child: Icon(
                 Icons.favorite_border_outlined,

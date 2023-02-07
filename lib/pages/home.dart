@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
         padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
         child: Column(
           children: [
-            SafeArea(
+            const SafeArea(
               child: Text(
                 'PokéDex',
                 style: TextStyle(

@@ -2,23 +2,20 @@ import 'dart:developer';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutterdex/models/card_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:flutterdex/models/pokemon.dart';
+import 'pokeModel.dart';
 
 class PoemonFeedData with ChangeNotifier {
-  bool isLoading;
+  late bool isLoading;
   bool isRequestError = false;
-  List<CardModel> pokeList = [];
-  List<Pokemon> descList = [];
-  Pokemon pokemon = Pokemon();
+  List<PokeModel> pokeList = [];
 
   Future<void> getHomeData() async {
     int pokeNumber = 151;
 
-    List<CardModel> tempList = [];
+    List<PokeModel> tempList = [];
     isRequestError = false;
     for (int index = 1; index <= pokeNumber; index++) {
       try {
@@ -26,7 +23,7 @@ class PoemonFeedData with ChangeNotifier {
         Uri url = Uri.parse('https://pokeapi.co/api/v2/pokemon/$index');
         final response = await http.get(url);
         final responseData = json.decode(response.body) as Map<String, dynamic>;
-        tempList.add(CardModel.fromJson(responseData));
+        tempList.add(PokeModel.fromJson(responseData));
       } catch (e) {
         throw (e);
       }

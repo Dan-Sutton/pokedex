@@ -1,24 +1,39 @@
-class Pokemon {
-  final int id;
-  final String name;
-  final String img;
+import 'package:flutter/material.dart';
 
-  Pokemon({
-    required this.id,
-    required this.name,
-    required this.img,
+class PokeModel with ChangeNotifier {
+  var id;
+  var name;
+  var sprite;
+  var type1;
+  var type2;
+
+  PokeModel({
+    this.id,
+    this.name,
+    this.sprite,
+    this.type1,
+    this.type2,
   });
 
-  factory Pokemon.fromJson(dynamic json) {
-    return Pokemon(
-        id: json['is'] as int,
-        name: json['name'] as String,
-        img: json['sprites']['front_default'] as String);
-  }
-
-  static List<Pokemon> pokemonFromSnapshot(List snapshot) {
-    return snapshot.map((data) {
-      return Pokemon.fromJson(data);
-    }).toList();
+  factory PokeModel.fromJson(Map<String, dynamic> json) {
+    String pokeId = json['id'].toString();
+    final List types = json['types'];
+    if (types.length == 1) {
+      return PokeModel(
+        id: pokeId,
+        name: json['name'],
+        sprite: json['sprites']['front_default'],
+        type1: json['types'][0]['type']['name'],
+        type2: null,
+      );
+    } else {
+      return PokeModel(
+        id: pokeId,
+        name: json['name'],
+        sprite: json['sprites']['front_default'],
+        type1: json['types'][0]['type']['name'],
+        type2: json['types'][1]['type']['name'],
+      );
+    }
   }
 }

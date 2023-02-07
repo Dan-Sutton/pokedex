@@ -1,7 +1,17 @@
+import 'package:flutter/material.dart';
+
 import 'pokeModel.dart';
 
-class pokeAPI {
-  static Future<List<Pokemon>> getPokemon() async {
-    var uri = Uri.https(authority)
+class PokeApi with ChangeNotifier {
+  var mainUrl;
+
+  PokeApi({
+    this.mainUrl,
+  });
+
+  factory PokeApi.getUrl(dynamic json) {
+    return PokeApi(
+      mainUrl: json['url'],
+    );
   }
 }

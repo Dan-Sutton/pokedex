@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/pages/pokeInfo.dart';
 
+import '../helpers/pokeTypeColor.dart';
+
 class PokeTile extends StatelessWidget {
   final dynamic poke;
   final BuildContext context;
@@ -16,6 +18,7 @@ class PokeTile extends StatelessWidget {
             MaterialPageRoute(
                 builder: (context) => PokeInfo(
                       data: poke,
+                      color: setTileColor(poke.type1)
                     )));
       },
       child: Container(
@@ -23,7 +26,8 @@ class PokeTile extends StatelessWidget {
         margin: EdgeInsets.all(5),
         padding: EdgeInsets.all(15),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20), color: Colors.red),
+            borderRadius: BorderRadius.circular(20),
+            color: setTileColor(poke.type1)),
         child: Stack(
           clipBehavior: Clip.none,
           children: [

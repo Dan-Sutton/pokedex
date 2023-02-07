@@ -47,26 +47,23 @@ class _HomeState extends State<Home> {
                         'https://media.tenor.com/fSsxftCb8w0AAAAi/pikachu-running.gif',
                       ),
                     ))
-                  : RefreshIndicator(
-                      onRefresh: () => _refreshData(context),
-                      child: ListView(
-                        children: [
-                          Column(
-                            children: pokeData.asMap().entries.map((
-                              item,
-                            ) {
-                              if (item.key == pokeData.length - 1) {
-                                return Image.network(
-                                  'https://i.imgur.com/rbMq6sW.gif',
-                                  scale: 7,
-                                );
-                              } else {
-                                return PokeTile(item.value, context);
-                              }
-                            }).toList(),
-                          ),
-                        ],
-                      ),
+                  : ListView(
+                      children: [
+                        Column(
+                          children: pokeData.asMap().entries.map((
+                            item,
+                          ) {
+                            if (item.key == pokeData.length - 1) {
+                              return Image.network(
+                                'https://i.imgur.com/rbMq6sW.gif',
+                                scale: 7,
+                              );
+                            } else {
+                              return PokeTile(item.value, context);
+                            }
+                          }).toList(),
+                        ),
+                      ],
                     ),
             ),
           ],

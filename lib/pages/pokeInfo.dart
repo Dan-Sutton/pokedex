@@ -7,8 +7,9 @@ import '../models/pokemonFeedData.dart';
 
 class PokeInfo extends StatefulWidget {
   final dynamic data;
+  final Color color;
 
-  const PokeInfo({Key? key, this.data}) : super(key: key);
+  const PokeInfo({Key? key, this.data, required this.color}) : super(key: key);
 
   @override
   _PokeInfoState createState() => _PokeInfoState();
@@ -48,12 +49,27 @@ class _PokeInfoState extends State<PokeInfo> {
         body: pokeInfo.isEmpty
             ? CircularProgressIndicator()
             : Container(
+                color: widget.color.withOpacity(0.35),
                 width: double.infinity,
                 child: Column(
                   children: [
-                    Image.network(
-                      '${pokeInfo['sprites']['front_default']}',
-                      scale: 0.3,
+                    Container(
+                      width: double.infinity,
+                      height: 300,
+                      child: Image.network(
+                          '${pokeInfo['sprites']['front_default']}',
+                          scale: 0.3, frameBuilder:
+                              (context, child, frame, wasSynchronouslyLoaded) {
+                        return child;
+                      }, loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      }),
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

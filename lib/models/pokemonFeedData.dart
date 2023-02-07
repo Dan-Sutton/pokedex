@@ -7,7 +7,7 @@ import 'dart:convert';
 
 import 'pokeModel.dart';
 
-class PoemonFeedData with ChangeNotifier {
+class PokemonFeedData with ChangeNotifier {
   late bool isLoading;
   bool isRequestError = false;
   List<PokeModel> pokeList = [];

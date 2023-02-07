@@ -1,73 +1,49 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 
-class PokemonTile extends StatefulWidget {
-  final Map tileData;
-  const PokemonTile({Key? key, required this.tileData}) : super(key: key);
+class PokeTile extends StatelessWidget {
+  final dynamic poke;
+  final BuildContext context;
 
-  @override
-  State<PokemonTile> createState() => _PokemonTileState();
-}
+  const PokeTile(this.poke, this.context);
 
-bool loading = true;
-Map pokeData = {};
-
-class _PokemonTileState extends State<PokemonTile> {
   @override
   Widget build(BuildContext context) {
-    bool _error = false;
-    String _errorMessage = "";
-
-    void getPokeData() async {
-      final response = await get(
-        Uri.parse('${widget.tileData['url']}'),
-      );
-      if (response.statusCode == 200) {
-        try {
-          _error = false;
-          setState(() {
-            loading = false;
-            pokeData = jsonDecode(response.body);
-          });
-        } catch (e) {
-          _error = true;
-          _errorMessage = e.toString();
-          setState(() {
-            pokeData = {};
-          });
-        }
-      } else {
-        _error = true;
-        _errorMessage = 'Something went wrong.';
-        setState(() {
-          pokeData = {};
-        });
-      }
-    }
-
-    if (loading) {
-      getPokeData();
-    }
-
-    return loading
-        ? Center(child: CircularProgressIndicator())
-        : Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.red,
-              ),
-              child: Row(
-                children: [
-                  Text('#${pokeData['id']}'),
-                  Text(widget.tileData['name']),
-                  Image.network('${pokeData['sprites']['front_default']}'),
-                ],
-              ),
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '# ${poke.id}',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+                ),
+                Text(
+                  poke.name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 25,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Row(
+                  children: [
+                    Text(poke.type1),
+                    SizedBox(width: 5),
+                    // Text(poke.type2),
+                  ],
+                )
+              ],
             ),
-          );
+            // Positioned(right: -40, bottom: -40, child: Image.asset(poke.image)),
+          ],
+        ),
+      ),
+    );
   }
 }

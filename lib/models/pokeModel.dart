@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class PokeModel with ChangeNotifier {
   var id;
   var name;
-  var sprite;
+  var image;
   var type1;
   var type2;
 
   PokeModel({
     this.id,
     this.name,
-    this.sprite,
+    this.image,
     this.type1,
     this.type2,
   });
@@ -22,7 +22,7 @@ class PokeModel with ChangeNotifier {
       return PokeModel(
         id: pokeId,
         name: json['name'],
-        sprite: json['sprites']['front_default'],
+        image: json['sprites']['front_default'],
         type1: json['types'][0]['type']['name'],
         type2: null,
       );
@@ -30,7 +30,7 @@ class PokeModel with ChangeNotifier {
       return PokeModel(
         id: pokeId,
         name: json['name'],
-        sprite: json['sprites']['front_default'],
+        image: json['sprites']['front_default'],
         type1: json['types'][0]['type']['name'],
         type2: json['types'][1]['type']['name'],
       );

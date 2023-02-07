@@ -12,7 +12,11 @@ class PokeTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => PokeInfo()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => PokeInfo(
+                      data: poke,
+                    )));
       },
       child: Container(
         height: 100,

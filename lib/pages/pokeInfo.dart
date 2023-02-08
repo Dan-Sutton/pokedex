@@ -140,30 +140,36 @@ class _PokeInfoState extends State<PokeInfo> {
                         endIndent: 20,
                         indent: 20,
                       ),
-                      CarouselSlider(
-                        items: [
-                          PokeAbout(
-                            color: widget.color,
-                            pokeInfo: pokeInfo,
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Container(
+                          color: widget.color.withAlpha(70),
+                          child: CarouselSlider(
+                            items: [
+                              PokeAbout(
+                                color: widget.color,
+                                pokeInfo: pokeInfo,
+                              ),
+                              PokeMoves(
+                                pokeInfo: pokeInfo,
+                                color: widget.color,
+                              ),
+                            ],
+                            carouselController: buttonCarouselController,
+                            options: CarouselOptions(
+                              enlargeFactor: 0,
+                              autoPlay: false,
+                              enlargeCenterPage: true,
+                              viewportFraction: 1,
+                              aspectRatio: 0.95,
+                              initialPage: 0,
+                              onPageChanged: (page, reason) {
+                                setState(() {
+                                  activePage = page;
+                                });
+                              },
+                            ),
                           ),
-                          PokeMoves(
-                            pokeInfo: pokeInfo,
-                            color: widget.color,
-                          ),
-                        ],
-                        carouselController: buttonCarouselController,
-                        options: CarouselOptions(
-                          enlargeFactor: 0,
-                          autoPlay: false,
-                          enlargeCenterPage: true,
-                          viewportFraction: 1,
-                          aspectRatio: 0.95,
-                          initialPage: 0,
-                          onPageChanged: (page, reason) {
-                            setState(() {
-                              activePage = page;
-                            });
-                          },
                         ),
                       ),
                       Padding(

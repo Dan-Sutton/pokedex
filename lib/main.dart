@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/models/pokemonFeedData.dart';
 import 'package:pokedex/pages/home.dart';
 import 'package:provider/provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async {
+  //Init local storage
+  await Hive.initFlutter();
+
+  var box = await Hive.openBox('localStore');
+
   runApp(const MyApp());
 }
 

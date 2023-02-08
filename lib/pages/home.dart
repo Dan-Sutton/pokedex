@@ -64,17 +64,18 @@ class _HomeState extends State<Home> {
       ),
       body: Container(
         padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
+        width: double.infinity,
+        color: data.isLoading ? Colors.red : Colors.white,
         child: Column(
           children: [
             Expanded(
               child: data.isLoading
-                  ? Center(
-                      child: SizedBox(
-                      width: 150,
+                  ? SizedBox(
+                      width: 300,
                       child: Image.network(
                         'https://media.tenor.com/fSsxftCb8w0AAAAi/pikachu-running.gif',
                       ),
-                    ))
+                    )
                   : ListView(
                       controller: controller,
                       children: [

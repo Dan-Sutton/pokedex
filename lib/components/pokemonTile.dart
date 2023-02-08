@@ -15,16 +15,18 @@ class PokeTile extends StatefulWidget {
 }
 
 class _PokeTileState extends State<PokeTile> {
-  final _box = Hive.box('localStore');
+  final _box = Hive.box('pokeStore1');
 
 //Write like to database
   void addLikePokemon(id, name) {
     _box.put(id, name);
-    print(_box.get(id));
+    print("ADD ${_box.get(id)}");
   }
 
   void removeLikePokemon(id) {
-    _box.clear();
+    _box.delete(id);
+    // _box.delete(id);
+    // print("Delete ${_box.get(id)}");
   }
 
   @override
@@ -102,10 +104,6 @@ class _PokeTileState extends State<PokeTile> {
                       !liked;
                     });
                   }
-                  addLikePokemon(widget.poke.id, widget.poke.name);
-                  setState(() {
-                    !liked;
-                  });
                 },
                 child: Icon(
                   liked ? Icons.favorite : Icons.favorite_border_outlined,

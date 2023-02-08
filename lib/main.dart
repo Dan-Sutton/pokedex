@@ -8,7 +8,7 @@ void main() async {
   //Init local storage
   await Hive.initFlutter();
 
-  var box = await Hive.openBox('localStore');
+  var box = await Hive.openBox('pokeStore1');
 
   runApp(const MyApp());
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:pokedex/components/infoCard.dart';
 import 'package:pokedex/components/pokemonTile.dart';
 import 'package:pokedex/pages/pokeInfo.dart';
 import 'package:http/http.dart' as http;
@@ -15,19 +16,28 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  String searchText = '';
-  bool hasSearched = false;
+  String errorMessage = "Pokémon doesn't exist!";
+  bool error = false;
 
   dynamic pokeInfo;
 
   void fetchPokeData(index) async {
-    Uri url = Uri.parse('https://pokeapi.co/api/v2/pokemon/$index');
-    final response = await http.get(url);
-    final responseData = json.decode(response.body) as Map<String, dynamic>;
+    try {
+      Uri url = Uri.parse('https://pokeapi.co/api/v2/pokemon/$index');
+      final response = await http.get(url);
+      print(response);
+      final responseData = json.decode(response.body) as Map<String, dynamic>;
 
-    setState(() {
-      pokeInfo = PokeModel.fromJson(responseData);
-    });
+      setState(() {
+        pokeInfo = PokeModel.fromJson(responseData);
+        error = false;
+      });
+    } catch (e) {
+      setState(() {
+        error = true;
+      });
+      // throw (e);
+    }
   }
 
   @override
@@ -52,13 +62,8 @@ class _SearchState extends State<Search> {
         child: Column(
           children: [
             TextField(
-              onChanged: ((value) => setState(() {
-                    searchText = value;
-                  })),
               onSubmitted: ((value) {
-                fetchPokeData(searchText);
-                // hasSearched = true;
-                // searchText = '';
+                fetchPokeData(value.toLowerCase());
               }),
               cursorColor: Colors.grey,
               decoration: InputDecoration(
@@ -75,14 +80,19 @@ class _SearchState extends State<Search> {
                     width: 18,
                   )),
             ),
-            pokeInfo == null
-                ? Text(
+            pokeInfo == null && !error
+                ? const Text(
                     'Search for a Pokémon',
                     style: TextStyle(color: Colors.black),
                   )
-                : Expanded(
-                    child: PokeInfo(data: pokeInfo),
-                  )
+                : error
+                    ? Text(
+                        errorMessage,
+                        style: TextStyle(color: Colors.black),
+                      )
+                    : Expanded(
+                        child: InfoCard(data: pokeInfo),
+                      )
           ],
         ),
       ),

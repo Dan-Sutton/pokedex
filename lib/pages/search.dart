@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:pokedex/components/pokemonTile.dart';
 import 'package:pokedex/pages/pokeInfo.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,18 +18,16 @@ class _SearchState extends State<Search> {
   String searchText = '';
   bool hasSearched = false;
 
-  Map pokeInfo = {};
+  dynamic pokeInfo;
 
   void fetchPokeData(index) async {
     Uri url = Uri.parse('https://pokeapi.co/api/v2/pokemon/$index');
     final response = await http.get(url);
-    final responseData = json.decode(response.body);
+    final responseData = json.decode(response.body) as Map<String, dynamic>;
 
-    if (this.mounted) {
-      setState(() {
-        pokeInfo = responseData;
-      });
-    }
+    setState(() {
+      pokeInfo = PokeModel.fromJson(responseData);
+    });
   }
 
   @override
@@ -50,7 +49,6 @@ class _SearchState extends State<Search> {
             child: Icon(Icons.arrow_back_ios)),
       ),
       body: Container(
-        padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
         child: Column(
           children: [
             TextField(
@@ -82,15 +80,8 @@ class _SearchState extends State<Search> {
                     'Search for a Pokémon',
                     style: TextStyle(color: Colors.black),
                   )
-                : SingleChildScrollView(
-                    child: PokeInfo(
-                      data: PokeModel(
-                          id: pokeInfo['id'],
-                          name: pokeInfo['name'],
-                          image: pokeInfo['image'],
-                          type1: pokeInfo['type1'],
-                          type2: pokeInfo['type2']),
-                    ),
+                : Expanded(
+                    child: PokeInfo(data: pokeInfo),
                   )
           ],
         ),

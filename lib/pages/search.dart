@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/pages/pokeInfo.dart';
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -6,6 +7,9 @@ class Search extends StatefulWidget {
   @override
   _SearchState createState() => _SearchState();
 }
+
+String searchText = '';
+bool hasSearched = false;
 
 class _SearchState extends State<Search> {
   @override
@@ -31,6 +35,16 @@ class _SearchState extends State<Search> {
         child: Column(
           children: [
             TextField(
+              onChanged: ((value) => setState(() {
+                    searchText = value;
+                  })),
+              onSubmitted: ((value) {
+                print(searchText);
+                setState(() {
+                  hasSearched = true;
+                  // searchText = '';
+                });
+              }),
               cursorColor: Colors.grey,
               decoration: InputDecoration(
                   fillColor: Colors.white,
@@ -46,6 +60,12 @@ class _SearchState extends State<Search> {
                     width: 18,
                   )),
             ),
+            hasSearched
+                ? Text(
+                    searchText,
+                    style: TextStyle(color: Colors.black),
+                  )
+                : Container()
           ],
         ),
       ),

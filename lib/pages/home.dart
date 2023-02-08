@@ -23,11 +23,22 @@ class _HomeState extends State<Home> {
     final data = Provider.of<PokemonFeedData>(context);
     final pokeData = data.pokeList;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.red,
+        title: const Text(
+          'PokéDex',
+          style: TextStyle(
+            fontWeight: FontWeight.w800,
+            fontSize: 35,
+          ),
+        ),
+      ),
       floatingActionButton: Container(
         width: 80,
         height: 80,
         child: FittedBox(
           child: FloatingActionButton(
+            elevation: 10,
             backgroundColor: Colors.red,
             child: const Icon(
               Icons.favorite,
@@ -48,15 +59,6 @@ class _HomeState extends State<Home> {
         padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
         child: Column(
           children: [
-            const SafeArea(
-              child: Text(
-                'PokéDex',
-                style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 35,
-                ),
-              ),
-            ),
             Expanded(
               child: data.isLoading
                   ? Center(

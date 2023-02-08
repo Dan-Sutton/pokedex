@@ -9,6 +9,7 @@ import 'package:pokedex/components/textPill.dart';
 import 'package:pokedex/helpers/stringExtension.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import '../data/database.dart';
 import '../models/pokemonFeedData.dart';
 
 class PokeInfo extends StatefulWidget {
@@ -43,6 +44,7 @@ class _PokeInfoState extends State<PokeInfo> {
   }
 
   final _box = Hive.box('pokeStore1');
+  SavedDataBase db = SavedDataBase();
 
 //Write like to database
   void addLikePokemon(id, name) {
@@ -56,7 +58,7 @@ class _PokeInfoState extends State<PokeInfo> {
 
   @override
   Widget build(BuildContext context) {
-    bool liked = _box.get(widget.data.id) == null ? false : true;
+    bool liked = db.savedPokeList.contains(widget.data.id) ? true : false;
     fetchPokeData(widget.data.id);
     return Scaffold(
         appBar: AppBar(
@@ -102,15 +104,18 @@ class _PokeInfoState extends State<PokeInfo> {
                                   child: GestureDetector(
                                     onTap: () {
                                       if (!liked) {
-                                        addLikePokemon(
-                                            widget.data.id, widget.data.name);
+                                        db.savedPokeList.add(widget.data.id);
                                         setState(() {
                                           !liked;
+                                          db.updateDatabase();
                                         });
+                                        db.updateDatabase();
                                       } else {
-                                        removeLikePokemon(widget.data.id);
+                                        db.savedPokeList.removeWhere(
+                                            (id) => id == widget.data.id);
                                         setState(() {
                                           !liked;
+                                          db.updateDatabase();
                                         });
                                       }
                                     },

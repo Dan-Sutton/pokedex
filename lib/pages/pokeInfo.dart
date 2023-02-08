@@ -99,11 +99,27 @@ class _PokeInfoState extends State<PokeInfo> {
                               Positioned(
                                   right: 20,
                                   top: 20,
-                                  child: Icon(
-                                    liked
-                                        ? Icons.favorite
-                                        : Icons.favorite_border_outlined,
-                                    size: 33,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      if (!liked) {
+                                        addLikePokemon(
+                                            widget.data.id, widget.data.name);
+                                        setState(() {
+                                          !liked;
+                                        });
+                                      } else {
+                                        removeLikePokemon(widget.data.id);
+                                        setState(() {
+                                          !liked;
+                                        });
+                                      }
+                                    },
+                                    child: Icon(
+                                      liked
+                                          ? Icons.favorite
+                                          : Icons.favorite_border_outlined,
+                                      size: 33,
+                                    ),
                                   )),
                               Image.network(
                                   '${pokeInfo['sprites']['front_default']}',

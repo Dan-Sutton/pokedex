@@ -105,7 +105,7 @@ class _PokeTileState extends State<PokeTile> {
                     db.updateDatabase();
                   } else {
                     db.savedPokeList
-                        .removeWhere((poke) => poke.id == widget.poke.id);
+                        .removeWhere((poke) => poke['id'] == widget.poke.id);
                     setState(() {
                       !liked;
                       db.updateDatabase();

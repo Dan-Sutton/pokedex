@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pokedex/components/pokeAbout.dart';
 import 'package:pokedex/components/pokeMoves.dart';
 import 'package:pokedex/components/textPill.dart';
@@ -41,8 +42,21 @@ class _PokeInfoState extends State<PokeInfo> {
     }
   }
 
+  final _box = Hive.box('pokeStore1');
+
+//Write like to database
+  void addLikePokemon(id, name) {
+    _box.put(id, name);
+  }
+
+//Delete like from database
+  void removeLikePokemon(id) {
+    _box.delete(id);
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool liked = _box.get(widget.data.id) == null ? false : true;
     fetchPokeData(widget.data.id);
     return Scaffold(
         appBar: AppBar(
@@ -82,11 +96,13 @@ class _PokeInfoState extends State<PokeInfo> {
                                       style: const TextStyle(
                                           fontSize: 25,
                                           fontWeight: FontWeight.w800))),
-                              const Positioned(
+                              Positioned(
                                   right: 20,
                                   top: 20,
                                   child: Icon(
-                                    Icons.favorite_border_outlined,
+                                    liked
+                                        ? Icons.favorite
+                                        : Icons.favorite_border_outlined,
                                     size: 33,
                                   )),
                               Image.network(

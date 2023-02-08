@@ -20,13 +20,11 @@ class _PokeTileState extends State<PokeTile> {
 //Write like to database
   void addLikePokemon(id, name) {
     _box.put(id, name);
-    print("ADD ${_box.get(id)}");
   }
 
+//Delete like from database
   void removeLikePokemon(id) {
     _box.delete(id);
-    // _box.delete(id);
-    // print("Delete ${_box.get(id)}");
   }
 
   @override

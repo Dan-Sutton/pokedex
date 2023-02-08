@@ -25,8 +25,6 @@ class _SavedState extends State<Saved> {
     super.initState();
   }
 
-  List<PokeModel> savedPokeData = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,8 +47,14 @@ class _SavedState extends State<Saved> {
         child: ListView(
           children: [
             Column(
-              children: db.savedPokeList.map<Widget>((id) {
-                return Text(id.toString());
+              children: db.savedPokeList.map<Widget>((pokemon) {
+                dynamic pokeModel = PokeModel(
+                    id: pokemon['id'],
+                    name: pokemon['name'],
+                    image: pokemon['image'],
+                    type1: pokemon['type1'],
+                    type2: pokemon['type2']);
+                return PokeTile(pokeModel, context);
               }).toList(),
             ),
           ],

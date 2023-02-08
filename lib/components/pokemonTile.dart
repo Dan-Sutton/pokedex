@@ -24,14 +24,12 @@ class _PokeTileState extends State<PokeTile> {
   }
 
   void removeLikePokemon(id) {
-    _box.delete(id);
+    _box.clear();
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
-   bool liked = _box.get(widget.poke.id) == null ? false : true;
+    bool liked = _box.get(widget.poke.id) == null ? false : true;
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -93,6 +91,17 @@ class _PokeTileState extends State<PokeTile> {
               right: 0,
               child: GestureDetector(
                 onTap: () {
+                  if (!liked) {
+                    addLikePokemon(widget.poke.id, widget.poke.name);
+                    setState(() {
+                      !liked;
+                    });
+                  } else {
+                    removeLikePokemon(widget.poke.id);
+                    setState(() {
+                      !liked;
+                    });
+                  }
                   addLikePokemon(widget.poke.id, widget.poke.name);
                   setState(() {
                     !liked;

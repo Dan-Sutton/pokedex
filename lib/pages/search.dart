@@ -26,8 +26,28 @@ class _SearchState extends State<Search> {
             },
             child: Icon(Icons.arrow_back_ios)),
       ),
-      body: Center(
-        child: Text('SEARCH'),
+      body: Container(
+        padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
+        child: Column(
+          children: [
+            TextField(
+              cursorColor: Colors.grey,
+              decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none),
+                  hintText: 'Search',
+                  hintStyle: TextStyle(color: Colors.grey, fontSize: 18),
+                  prefixIcon: Container(
+                    padding: EdgeInsets.all(15),
+                    child: Icon(Icons.search),
+                    width: 18,
+                  )),
+            ),
+          ],
+        ),
       ),
     );
   }

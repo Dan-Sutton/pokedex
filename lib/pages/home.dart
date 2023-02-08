@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pokedex/components/pokemonTile.dart';
+import 'package:pokedex/pages/saved.dart';
 import 'package:provider/provider.dart';
 
 import '../models/pokemonFeedData.dart';
@@ -22,6 +23,16 @@ class _HomeState extends State<Home> {
     final data = Provider.of<PokemonFeedData>(context);
     final pokeData = data.pokeList;
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Saved(
+                        pokeInfo: pokeData,
+                      ))).then((value) => {setState(() {})});
+        },
+      ),
       body: Container(
         padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
         child: Column(

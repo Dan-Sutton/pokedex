@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pokedex/components/pokemonTile.dart';
+import 'package:pokedex/models/pokeModel.dart';
 import 'package:pokedex/pages/saved.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +23,13 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final data = Provider.of<PokemonFeedData>(context);
     final pokeData = data.pokeList;
+
+    // pokeData.add(PokeModel(
+    //     id: 12344,
+    //     name: 'Test',
+    //     type1: 'Cool',
+    //     image: 'https://i.imgur.com/rbMq6sW.gif'));
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,

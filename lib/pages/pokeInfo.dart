@@ -10,13 +10,16 @@ import 'package:pokedex/helpers/stringExtension.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import '../data/database.dart';
+import '../helpers/pokeTypeColor.dart';
 import '../models/pokemonFeedData.dart';
 
 class PokeInfo extends StatefulWidget {
   final dynamic data;
-  final Color color;
 
-  const PokeInfo({Key? key, this.data, required this.color}) : super(key: key);
+  const PokeInfo({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
 
   @override
   _PokeInfoState createState() => _PokeInfoState();
@@ -59,7 +62,7 @@ class _PokeInfoState extends State<PokeInfo> {
     fetchPokeData(widget.data.id);
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: widget.color,
+          backgroundColor: setTileColor(widget.data.type1),
           title: Text(
             "${widget.data.name}".capitalize(),
             style: const TextStyle(
@@ -76,7 +79,7 @@ class _PokeInfoState extends State<PokeInfo> {
         body: pokeInfo.isEmpty
             ? CircularProgressIndicator()
             : Container(
-                color: widget.color.withOpacity(0.35),
+                color: setTileColor(widget.data.type1).withOpacity(0.35),
                 width: double.infinity,
                 height: double.infinity,
                 child: SingleChildScrollView(
@@ -155,16 +158,16 @@ class _PokeInfoState extends State<PokeInfo> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(20),
                         child: Container(
-                          color: widget.color.withAlpha(70),
+                          color: setTileColor(widget.data.type1).withAlpha(70),
                           child: CarouselSlider(
                             items: [
                               PokeAbout(
-                                color: widget.color,
+                                color: setTileColor(widget.data.type1),
                                 pokeInfo: pokeInfo,
                               ),
                               PokeMoves(
                                 pokeInfo: pokeInfo,
-                                color: widget.color,
+                                color: setTileColor(widget.data.type1),
                               ),
                             ],
                             carouselController: buttonCarouselController,
@@ -198,7 +201,7 @@ class _PokeInfoState extends State<PokeInfo> {
                                 size: activePage == 0 ? 25 : 20,
                                 color: activePage == 0
                                     ? Colors.white
-                                    : widget.color,
+                                    : setTileColor(widget.data.type1),
                               ),
                             ),
                             Padding(
@@ -212,7 +215,7 @@ class _PokeInfoState extends State<PokeInfo> {
                                   size: activePage == 1 ? 25 : 20,
                                   color: activePage == 1
                                       ? Colors.white
-                                      : widget.color,
+                                      : setTileColor(widget.data.type1),
                                 ),
                               ),
                             ),

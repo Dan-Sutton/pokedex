@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:pokedex/pages/pokeInfo.dart';
+import 'package:http/http.dart' as http;
+
+import '../models/pokeModel.dart';
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -8,10 +13,24 @@ class Search extends StatefulWidget {
   _SearchState createState() => _SearchState();
 }
 
-String searchText = '';
-bool hasSearched = false;
-
 class _SearchState extends State<Search> {
+  String searchText = '';
+  bool hasSearched = false;
+
+  Map pokeInfo = {};
+
+  void fetchPokeData(index) async {
+    Uri url = Uri.parse('https://pokeapi.co/api/v2/pokemon/$index');
+    final response = await http.get(url);
+    final responseData = json.decode(response.body);
+
+    if (this.mounted) {
+      setState(() {
+        pokeInfo = responseData;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,11 +58,9 @@ class _SearchState extends State<Search> {
                     searchText = value;
                   })),
               onSubmitted: ((value) {
-                print(searchText);
-                setState(() {
-                  hasSearched = true;
-                  // searchText = '';
-                });
+                fetchPokeData(searchText);
+                // hasSearched = true;
+                // searchText = '';
               }),
               cursorColor: Colors.grey,
               decoration: InputDecoration(
@@ -60,12 +77,21 @@ class _SearchState extends State<Search> {
                     width: 18,
                   )),
             ),
-            hasSearched
+            pokeInfo == null
                 ? Text(
-                    searchText,
+                    'Search for a Pokémon',
                     style: TextStyle(color: Colors.black),
                   )
-                : Container()
+                : SingleChildScrollView(
+                    child: PokeInfo(
+                      data: PokeModel(
+                          id: pokeInfo['id'],
+                          name: pokeInfo['name'],
+                          image: pokeInfo['image'],
+                          type1: pokeInfo['type1'],
+                          type2: pokeInfo['type2']),
+                    ),
+                  )
           ],
         ),
       ),

@@ -1,8 +1,10 @@
+import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pokedex/components/pokemonTile.dart';
 import 'package:pokedex/models/pokeModel.dart';
 import 'package:pokedex/pages/saved.dart';
+import 'package:pokedex/pages/search.dart';
 import 'package:provider/provider.dart';
 
 import '../models/pokemonFeedData.dart';
@@ -12,11 +14,12 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+  late Animation<double> _animation;
+  late AnimationController _animationController;
   final controller = ScrollController();
   @override
   void initState() {
-    super.initState();
     Provider.of<PokemonFeedData>(context, listen: false).getHomeData();
 
     controller.addListener(() {
@@ -25,6 +28,17 @@ class _HomeState extends State<Home> {
         Provider.of<PokemonFeedData>(context, listen: false).getMoreData();
       }
     });
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 260),
+    );
+
+    final curvedAnimation =
+        CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
+    _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
+
+    super.initState();
   }
 
   @override
@@ -43,24 +57,41 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-      floatingActionButton: Container(
-        width: 80,
-        height: 80,
-        child: FittedBox(
-          child: FloatingActionButton(
-            elevation: 10,
-            backgroundColor: Colors.red,
-            child: const Icon(
-              Icons.favorite,
-              size: 30,
-            ),
-            onPressed: () {
+      floatingActionButton: FloatingActionBubble(
+        animation: _animation,
+        onPress: () => _animationController.isCompleted
+            ? _animationController.reverse()
+            : _animationController.forward(),
+        iconColor: Colors.white,
+        iconData: Icons.menu,
+        backGroundColor: Colors.red,
+        items: <Bubble>[
+          Bubble(
+            title: "Saved",
+            iconColor: Colors.white,
+            bubbleColor: Colors.red,
+            icon: Icons.favorite,
+            titleStyle: TextStyle(fontSize: 16, color: Colors.white),
+            onPress: () {
               Navigator.push(
                       context, MaterialPageRoute(builder: (context) => Saved()))
                   .then((value) => {setState(() {})});
             },
           ),
-        ),
+          // Floating action menu item
+          Bubble(
+            title: "Search",
+            iconColor: Colors.white,
+            bubbleColor: Colors.blue,
+            icon: Icons.search,
+            titleStyle: TextStyle(fontSize: 16, color: Colors.white),
+            onPress: () {
+              Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Search()))
+                  .then((value) => {setState(() {})});
+            },
+          ),
+        ],
       ),
       body: Container(
         padding: EdgeInsets.fromLTRB(20, 5, 20, 0),

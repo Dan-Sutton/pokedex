@@ -17,7 +17,7 @@ class PokeTile extends StatefulWidget {
 }
 
 class _PokeTileState extends State<PokeTile> {
-  final _box = Hive.box('pokeStore2');
+  final _box = Hive.box('pokeStore3');
   SavedDataBase db = SavedDataBase();
 
   void initState() {

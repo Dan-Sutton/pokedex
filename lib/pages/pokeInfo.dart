@@ -44,12 +44,18 @@ class _PokeInfoState extends State<PokeInfo> {
     }
   }
 
-  final _box = Hive.box('pokeStore2');
+  final _box = Hive.box('pokeStore3');
   SavedDataBase db = SavedDataBase();
 
   @override
   Widget build(BuildContext context) {
-    bool liked = db.savedPokeList.contains(widget.data.id) ? true : false;
+    bool liked = db.savedPokeList.any((savedPoke) {
+      if (savedPoke['id'] == widget.data.id) {
+        return true;
+      } else {
+        return false;
+      }
+    });
     fetchPokeData(widget.data.id);
     return Scaffold(
         appBar: AppBar(
@@ -95,15 +101,21 @@ class _PokeInfoState extends State<PokeInfo> {
                                   child: GestureDetector(
                                     onTap: () {
                                       if (!liked) {
-                                        db.savedPokeList.add(widget.data.id);
+                                        db.savedPokeList.add({
+                                          'id': widget.data.id,
+                                          'name': widget.data.name,
+                                          'image': widget.data.image,
+                                          'type1': widget.data.type1,
+                                          'type2': widget.data.type2
+                                        });
                                         setState(() {
                                           !liked;
                                           db.updateDatabase();
                                         });
                                         db.updateDatabase();
                                       } else {
-                                        db.savedPokeList.removeWhere(
-                                            (id) => id == widget.data.id);
+                                        db.savedPokeList.removeWhere((poke) =>
+                                            poke['id'] == widget.data.id);
                                         setState(() {
                                           !liked;
                                           db.updateDatabase();

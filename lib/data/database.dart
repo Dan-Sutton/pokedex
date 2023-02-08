@@ -4,7 +4,7 @@ import 'package:pokedex/models/pokeModel.dart';
 class SavedDataBase {
   List<dynamic> savedPokeList = [];
 
-  final _box = Hive.box('pokeStore2');
+  final _box = Hive.box('pokeStore3');
 
   void loadData() {
     if (_box.get('POKELIST') == null) {

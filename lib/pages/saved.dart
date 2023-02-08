@@ -16,7 +16,7 @@ class Saved extends StatefulWidget {
 }
 
 class _SavedState extends State<Saved> {
-  final _box = Hive.box('pokeStore2');
+  final _box = Hive.box('pokeStore3');
   SavedDataBase db = SavedDataBase();
 
   @override

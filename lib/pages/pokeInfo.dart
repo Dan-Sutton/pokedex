@@ -46,16 +46,6 @@ class _PokeInfoState extends State<PokeInfo> {
   final _box = Hive.box('pokeStore1');
   SavedDataBase db = SavedDataBase();
 
-//Write like to database
-  void addLikePokemon(id, name) {
-    _box.put(id, name);
-  }
-
-//Delete like from database
-  void removeLikePokemon(id) {
-    _box.delete(id);
-  }
-
   @override
   Widget build(BuildContext context) {
     bool liked = db.savedPokeList.contains(widget.data.id) ? true : false;

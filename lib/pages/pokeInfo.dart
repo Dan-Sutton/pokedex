@@ -25,6 +25,7 @@ class PokeInfo extends StatefulWidget {
 class _PokeInfoState extends State<PokeInfo> {
   @override
   void initState() {
+    db.loadData();
     super.initState();
   }
 

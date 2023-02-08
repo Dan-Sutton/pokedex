@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pokedex/helpers/stringExtension.dart';
 import 'package:pokedex/pages/pokeInfo.dart';
+import '../data/database.dart';
 import '../helpers/pokeTypeColor.dart';
 
 class PokeTile extends StatefulWidget {
@@ -16,20 +17,16 @@ class PokeTile extends StatefulWidget {
 
 class _PokeTileState extends State<PokeTile> {
   final _box = Hive.box('pokeStore1');
+  SavedDataBase db = SavedDataBase();
 
-//Write like to database
-  void addLikePokemon(id, name) {
-    _box.put(id, name);
-  }
-
-//Delete like from database
-  void removeLikePokemon(id) {
-    _box.delete(id);
+  void initState() {
+    db.loadData();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    bool liked = _box.get(widget.poke.id) == null ? false : true;
+    bool liked = db.savedPokeList.contains(widget.poke.id) ? true : false;
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -93,14 +90,17 @@ class _PokeTileState extends State<PokeTile> {
               child: GestureDetector(
                 onTap: () {
                   if (!liked) {
-                    addLikePokemon(widget.poke.id, widget.poke.name);
+                    db.savedPokeList.add(widget.poke.id);
                     setState(() {
                       !liked;
+                      db.updateDatabase();
                     });
+                    db.updateDatabase();
                   } else {
-                    removeLikePokemon(widget.poke.id);
+                    db.savedPokeList.removeWhere((id) => id == widget.poke.id);
                     setState(() {
                       !liked;
+                      db.updateDatabase();
                     });
                   }
                 },

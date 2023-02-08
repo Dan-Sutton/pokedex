@@ -11,5 +11,6 @@ class SavedDataBase {
 
   void updateDatabase() {
     _box.put('POKELIST', savedPokeList);
+    print(_box.get('POKELIST'));
   }
 }

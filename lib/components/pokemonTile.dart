@@ -16,7 +16,7 @@ class PokeTile extends StatefulWidget {
 }
 
 class _PokeTileState extends State<PokeTile> {
-  final _box = Hive.box('pokeStore1');
+  final _box = Hive.box('pokeStore2');
   SavedDataBase db = SavedDataBase();
 
   void initState() {
@@ -26,7 +26,13 @@ class _PokeTileState extends State<PokeTile> {
 
   @override
   Widget build(BuildContext context) {
-    bool liked = db.savedPokeList.contains(widget.poke.id) ? true : false;
+    bool liked = db.savedPokeList.any((savedPoke) {
+      if (savedPoke['id'] == widget.poke.id) {
+        return true;
+      } else {
+        return false;
+      }
+    });
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -90,14 +96,16 @@ class _PokeTileState extends State<PokeTile> {
               child: GestureDetector(
                 onTap: () {
                   if (!liked) {
-                    db.savedPokeList.add(widget.poke.id);
+                    db.savedPokeList
+                        .add({'id': widget.poke.id, 'name': widget.poke.name});
                     setState(() {
                       !liked;
                       db.updateDatabase();
                     });
                     db.updateDatabase();
                   } else {
-                    db.savedPokeList.removeWhere((id) => id == widget.poke.id);
+                    db.savedPokeList
+                        .removeWhere((poke) => poke.id == widget.poke.id);
                     setState(() {
                       !liked;
                       db.updateDatabase();

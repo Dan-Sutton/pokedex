@@ -1,19 +1,22 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
+import 'package:http/http.dart' as http;
 import '../components/pokemonTile.dart';
 import '../data/database.dart';
+import '../models/pokeModel.dart';
 
 class Saved extends StatefulWidget {
-  final dynamic pokeInfo;
-  const Saved({Key? key, this.pokeInfo}) : super(key: key);
+  const Saved({Key? key}) : super(key: key);
 
   @override
   _SavedState createState() => _SavedState();
 }
 
 class _SavedState extends State<Saved> {
-  final _box = Hive.box('pokeStore1');
+  final _box = Hive.box('pokeStore2');
   SavedDataBase db = SavedDataBase();
 
   @override
@@ -21,6 +24,8 @@ class _SavedState extends State<Saved> {
     db.loadData();
     super.initState();
   }
+
+  List<PokeModel> savedPokeData = [];
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +49,8 @@ class _SavedState extends State<Saved> {
         child: ListView(
           children: [
             Column(
-              children: widget.pokeInfo.map<Widget>((poke) {
-                if (db.savedPokeList.contains(poke.id)) {
-                  return PokeTile(poke, context);
-                } else {
-                  return Container();
-                }
+              children: db.savedPokeList.map<Widget>((id) {
+                return Text(id.toString());
               }).toList(),
             ),
           ],

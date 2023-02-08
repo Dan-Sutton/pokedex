@@ -44,7 +44,7 @@ class _PokeInfoState extends State<PokeInfo> {
     }
   }
 
-  final _box = Hive.box('pokeStore1');
+  final _box = Hive.box('pokeStore2');
   SavedDataBase db = SavedDataBase();
 
   @override

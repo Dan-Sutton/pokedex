@@ -12,6 +12,7 @@ class PokemonFeedData with ChangeNotifier {
   late bool isLoading;
   bool isRequestError = false;
   List<PokeModel> pokeList = [];
+  int offset = 0;
 
   Future<void> getHomeData() async {
     int pokeNumber = 21;
@@ -35,5 +36,29 @@ class PokemonFeedData with ChangeNotifier {
       notifyListeners();
       inspect(pokeList);
     }
+  }
+
+  Future<void> getMoreData() async {
+    offset += 6;
+    int pokeNumber = 21 + offset;
+
+    List<PokeModel> tempList = [];
+    isRequestError = false;
+    for (int index = 1 + offset; index <= pokeNumber; index++) {
+      try {
+        isLoading = true;
+        Uri url = Uri.parse('https://pokeapi.co/api/v2/pokemon/$index');
+        final response = await http.get(url);
+        final responseData = json.decode(response.body) as Map<String, dynamic>;
+        tempList.add(PokeModel.fromJson(responseData));
+      } catch (e) {
+        throw (e);
+      }
+    }
+
+    pokeList.addAll(tempList);
+    isLoading = false;
+    notifyListeners();
+    inspect(pokeList);
   }
 }

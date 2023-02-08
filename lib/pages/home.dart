@@ -18,18 +18,20 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     Provider.of<PokemonFeedData>(context, listen: false).getHomeData();
-
-    controller.addListener(() {
-      if (controller.position.maxScrollExtent == controller.offset) {
-        print('End of list');
-      }
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     final data = Provider.of<PokemonFeedData>(context);
     final pokeData = data.pokeList;
+
+    controller.addListener(() {
+      if (controller.position.maxScrollExtent == controller.offset) {
+        print('End of list');
+        Provider.of<PokemonFeedData>(context, listen: false).getMoreData();
+        setState(() {});
+      }
+    });
 
     // pokeData.add(PokeModel(
     //     id: 12344,
@@ -61,11 +63,8 @@ class _HomeState extends State<Home> {
             ),
             onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Saved(
-                            pokeInfo: pokeData,
-                          ))).then((value) => {setState(() {})});
+                      context, MaterialPageRoute(builder: (context) => Saved()))
+                  .then((value) => {setState(() {})});
             },
           ),
         ),

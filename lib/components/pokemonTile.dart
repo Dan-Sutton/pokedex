@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pokedex/helpers/stringExtension.dart';
 import 'package:pokedex/pages/pokeInfo.dart';
 import '../helpers/pokeTypeColor.dart';
@@ -7,7 +8,14 @@ class PokeTile extends StatelessWidget {
   final dynamic poke;
   final BuildContext context;
 
-  const PokeTile(this.poke, this.context);
+  PokeTile(this.poke, this.context, {super.key});
+
+  final _box = Hive.box('localStore');
+
+  void addLikePokemon(id, name) {
+    _box.put(id, name);
+    print(_box.get(id));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +79,7 @@ class PokeTile extends StatelessWidget {
               right: 0,
               child: GestureDetector(
                 onTap: () {
-                  print('Liked');
+                  addLikePokemon(poke.id, poke.name);
                 },
                 child: Icon(
                   Icons.favorite_border_outlined,

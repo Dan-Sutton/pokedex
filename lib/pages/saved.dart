@@ -29,6 +29,7 @@ class _SavedState extends State<Saved> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.deepOrange,
         title: const Text(
           "Saved Pokémon",
           style: TextStyle(

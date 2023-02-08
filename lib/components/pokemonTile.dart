@@ -48,6 +48,14 @@ class _PokeTileState extends State<PokeTile> {
         margin: EdgeInsets.all(5),
         padding: EdgeInsets.all(15),
         decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.4),
+                spreadRadius: 3,
+                blurRadius: 4,
+                offset: Offset(0, 2), // changes position of shadow
+              ),
+            ],
             borderRadius: BorderRadius.circular(20),
             color: setTileColor(widget.poke.type1)),
         child: Stack(

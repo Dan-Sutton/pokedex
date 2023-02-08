@@ -25,20 +25,6 @@ class _HomeState extends State<Home> {
     final data = Provider.of<PokemonFeedData>(context);
     final pokeData = data.pokeList;
 
-    controller.addListener(() {
-      if (controller.position.maxScrollExtent == controller.offset) {
-        print('End of list');
-        Provider.of<PokemonFeedData>(context, listen: false).getMoreData();
-        setState(() {});
-      }
-    });
-
-    // pokeData.add(PokeModel(
-    //     id: 12344,
-    //     name: 'Test',
-    //     type1: 'Cool',
-    //     image: 'https://i.imgur.com/rbMq6sW.gif'));
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
@@ -90,9 +76,38 @@ class _HomeState extends State<Home> {
                             item,
                           ) {
                             if (item.key == pokeData.length - 1) {
-                              return Image.network(
-                                'https://i.imgur.com/rbMq6sW.gif',
-                                scale: 7,
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Provider.of<PokemonFeedData>(context,
+                                            listen: false)
+                                        .getMoreData();
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        color: Color(0xFF63747A),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.4),
+                                            spreadRadius: 3,
+                                            blurRadius: 4,
+                                            offset: Offset(0,
+                                                2), // changes position of shadow
+                                          ),
+                                        ],
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    child: const Text(
+                                      'Load More Pokémon',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                                ),
                               );
                             } else {
                               return PokeTile(item.value, context);

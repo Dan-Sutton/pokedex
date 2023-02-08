@@ -18,6 +18,13 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     Provider.of<PokemonFeedData>(context, listen: false).getHomeData();
+
+    controller.addListener(() {
+      if (controller.position.maxScrollExtent == controller.offset) {
+        print('End of list');
+        Provider.of<PokemonFeedData>(context, listen: false).getMoreData();
+      }
+    });
   }
 
   @override
@@ -77,38 +84,14 @@ class _HomeState extends State<Home> {
                           ) {
                             if (item.key == pokeData.length - 1) {
                               return Padding(
-                                padding: const EdgeInsets.only(top: 10.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Provider.of<PokemonFeedData>(context,
-                                            listen: false)
-                                        .getMoreData();
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        color: Color(0xFF63747A),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.4),
-                                            spreadRadius: 3,
-                                            blurRadius: 4,
-                                            offset: Offset(0,
-                                                2), // changes position of shadow
-                                          ),
-                                        ],
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    child: const Text(
-                                      'Load More Pokémon',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.white),
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                  child: Center(
+                                      child: SizedBox(
+                                    width: 60,
+                                    child: Image.network(
+                                      'https://media.tenor.com/fSsxftCb8w0AAAAi/pikachu-running.gif',
                                     ),
-                                  ),
-                                ),
-                              );
+                                  )));
                             } else {
                               return PokeTile(item.value, context);
                             }

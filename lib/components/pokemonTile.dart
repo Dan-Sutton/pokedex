@@ -4,6 +4,7 @@ import 'package:pokedex/helpers/stringExtension.dart';
 import 'package:pokedex/pages/pokeInfo.dart';
 import '../data/database.dart';
 import '../helpers/pokeTypeColor.dart';
+import 'typeTag.dart';
 
 class PokeTile extends StatefulWidget {
   final dynamic poke;
@@ -44,7 +45,7 @@ class _PokeTileState extends State<PokeTile> {
             .then((value) => {setState(() {})});
       },
       child: Container(
-        height: 100,
+        height: 110,
         margin: EdgeInsets.all(5),
         padding: EdgeInsets.all(15),
         decoration: BoxDecoration(
@@ -84,9 +85,16 @@ class _PokeTileState extends State<PokeTile> {
                 SizedBox(height: 5),
                 Row(
                   children: [
-                    Text(widget.poke.type1),
-                    SizedBox(width: 5),
-                    if (widget.poke.type2 != null) Text(widget.poke.type2),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: TypeTag(
+                        text: widget.poke.type1,
+                      ),
+                    ),
+                    if (widget.poke.type2 != null)
+                      TypeTag(
+                        text: widget.poke.type2,
+                      ),
                   ],
                 )
               ],

@@ -23,15 +23,26 @@ class _HomeState extends State<Home> {
     final data = Provider.of<PokemonFeedData>(context);
     final pokeData = data.pokeList;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Saved(
-                        pokeInfo: pokeData,
-                      ))).then((value) => {setState(() {})});
-        },
+      floatingActionButton: Container(
+        width: 80,
+        height: 80,
+        child: FittedBox(
+          child: FloatingActionButton(
+            backgroundColor: Colors.red,
+            child: const Icon(
+              Icons.favorite,
+              size: 30,
+            ),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Saved(
+                            pokeInfo: pokeData,
+                          ))).then((value) => {setState(() {})});
+            },
+          ),
+        ),
       ),
       body: Container(
         padding: EdgeInsets.fromLTRB(20, 5, 20, 0),

@@ -12,9 +12,14 @@ class PokeTile extends StatelessWidget {
 
   final _box = Hive.box('localStore');
 
+//Write like to database
   void addLikePokemon(id, name) {
     _box.put(id, name);
     print(_box.get(id));
+  }
+
+  void removeLikePokemon(id) {
+    _box.delete(id);
   }
 
   @override
@@ -82,7 +87,9 @@ class PokeTile extends StatelessWidget {
                   addLikePokemon(poke.id, poke.name);
                 },
                 child: Icon(
-                  Icons.favorite_border_outlined,
+                  _box.get(poke.id) == null
+                      ? Icons.favorite_border_outlined
+                      : Icons.favorite,
                   size: 30,
                 ),
               ),

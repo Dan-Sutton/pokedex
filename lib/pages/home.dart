@@ -13,10 +13,17 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final controller = ScrollController();
   @override
   void initState() {
     super.initState();
     Provider.of<PokemonFeedData>(context, listen: false).getHomeData();
+
+    controller.addListener(() {
+      if (controller.position.maxScrollExtent == controller.offset) {
+        print('End of list');
+      }
+    });
   }
 
   @override
@@ -77,6 +84,7 @@ class _HomeState extends State<Home> {
                       ),
                     ))
                   : ListView(
+                      controller: controller,
                       children: [
                         Column(
                           children: pokeData.asMap().entries.map((

@@ -33,11 +33,12 @@ class _PokeTileState extends State<PokeTile> {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => PokeInfo(
-                    data: widget.poke,
-                    color: setTileColor(widget.poke.type1))));
+                context,
+                MaterialPageRoute(
+                    builder: (context) => PokeInfo(
+                        data: widget.poke,
+                        color: setTileColor(widget.poke.type1))))
+            .then((value) => {setState(() {})});
       },
       child: Container(
         height: 100,

@@ -4,12 +4,17 @@ import 'package:pokedex/helpers/stringExtension.dart';
 import 'package:pokedex/pages/pokeInfo.dart';
 import '../helpers/pokeTypeColor.dart';
 
-class PokeTile extends StatelessWidget {
+class PokeTile extends StatefulWidget {
   final dynamic poke;
   final BuildContext context;
 
   PokeTile(this.poke, this.context, {super.key});
 
+  @override
+  State<PokeTile> createState() => _PokeTileState();
+}
+
+class _PokeTileState extends State<PokeTile> {
   final _box = Hive.box('localStore');
 
 //Write like to database
@@ -22,15 +27,19 @@ class PokeTile extends StatelessWidget {
     _box.delete(id);
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
+   bool liked = _box.get(widget.poke.id) == null ? false : true;
     return GestureDetector(
       onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    PokeInfo(data: poke, color: setTileColor(poke.type1))));
+                builder: (context) => PokeInfo(
+                    data: widget.poke,
+                    color: setTileColor(widget.poke.type1))));
       },
       child: Container(
         height: 100,
@@ -38,7 +47,7 @@ class PokeTile extends StatelessWidget {
         padding: EdgeInsets.all(15),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: setTileColor(poke.type1)),
+            color: setTileColor(widget.poke.type1)),
         child: Stack(
           clipBehavior: Clip.none,
           children: [
@@ -48,14 +57,14 @@ class PokeTile extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '# ${poke.id}',
+                      '# ${widget.poke.id}',
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
                     ),
                   ],
                 ),
                 Text(
-                  '${poke.name}'.capitalize(),
+                  '${widget.poke.name}'.capitalize(),
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 25,
@@ -65,9 +74,9 @@ class PokeTile extends StatelessWidget {
                 SizedBox(height: 5),
                 Row(
                   children: [
-                    Text(poke.type1),
+                    Text(widget.poke.type1),
                     SizedBox(width: 5),
-                    if (poke.type2 != null) Text(poke.type2),
+                    if (widget.poke.type2 != null) Text(widget.poke.type2),
                   ],
                 )
               ],
@@ -76,7 +85,7 @@ class PokeTile extends StatelessWidget {
               right: 30,
               bottom: -35,
               child: Image.network(
-                poke.image,
+                widget.poke.image,
                 scale: 0.7,
               ),
             ),
@@ -84,12 +93,13 @@ class PokeTile extends StatelessWidget {
               right: 0,
               child: GestureDetector(
                 onTap: () {
-                  addLikePokemon(poke.id, poke.name);
+                  addLikePokemon(widget.poke.id, widget.poke.name);
+                  setState(() {
+                    !liked;
+                  });
                 },
                 child: Icon(
-                  _box.get(poke.id) == null
-                      ? Icons.favorite_border_outlined
-                      : Icons.favorite,
+                  liked ? Icons.favorite : Icons.favorite_border_outlined,
                   size: 30,
                 ),
               ),

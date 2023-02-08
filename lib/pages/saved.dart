@@ -16,6 +16,7 @@ class _SavedState extends State<Saved> {
   final _box = Hive.box('pokeStore1');
   SavedDataBase db = SavedDataBase();
 
+  @override
   void initState() {
     db.loadData();
     super.initState();

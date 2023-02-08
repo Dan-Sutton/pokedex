@@ -96,8 +96,13 @@ class _PokeTileState extends State<PokeTile> {
               child: GestureDetector(
                 onTap: () {
                   if (!liked) {
-                    db.savedPokeList
-                        .add({'id': widget.poke.id, 'name': widget.poke.name});
+                    db.savedPokeList.add({
+                      'id': widget.poke.id,
+                      'name': widget.poke.name,
+                      'image': widget.poke.image,
+                      'type1': widget.poke.type1,
+                      'type2': widget.poke.type2
+                    });
                     setState(() {
                       !liked;
                       db.updateDatabase();

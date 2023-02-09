@@ -21,11 +21,12 @@ class _SearchState extends State<Search> {
 
   dynamic pokeInfo;
 
+  final fieldText = TextEditingController();
+
   void fetchPokeData(index) async {
     try {
       Uri url = Uri.parse('https://pokeapi.co/api/v2/pokemon/$index');
       final response = await http.get(url);
-      print(response);
       final responseData = json.decode(response.body) as Map<String, dynamic>;
 
       setState(() {
@@ -36,6 +37,7 @@ class _SearchState extends State<Search> {
       setState(() {
         error = true;
       });
+
       // throw (e);
     }
   }
@@ -62,8 +64,10 @@ class _SearchState extends State<Search> {
         child: Column(
           children: [
             TextField(
+              controller: fieldText,
               onSubmitted: ((value) {
                 fetchPokeData(value.toLowerCase());
+                fieldText.clear();
               }),
               cursorColor: Colors.grey,
               decoration: InputDecoration(
@@ -81,14 +85,18 @@ class _SearchState extends State<Search> {
                   )),
             ),
             pokeInfo == null && !error
-                ? const Text(
-                    'Search for a Pokémon',
-                    style: TextStyle(color: Colors.black),
+                ? const Center(
+                    child: Text(
+                      'Search for a Pokémon',
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
                   )
                 : error
-                    ? Text(
-                        errorMessage,
-                        style: TextStyle(color: Colors.black),
+                    ? Center(
+                        child: Text(
+                          errorMessage,
+                          style: TextStyle(color: Colors.black, fontSize: 20),
+                        ),
                       )
                     : Expanded(
                         child: InfoCard(data: pokeInfo),

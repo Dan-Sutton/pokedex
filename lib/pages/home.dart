@@ -57,42 +57,44 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionBubble(
-        animation: _animation,
-        onPress: () => _animationController.isCompleted
-            ? _animationController.reverse()
-            : _animationController.forward(),
-        iconColor: Colors.white,
-        iconData: Icons.menu,
-        backGroundColor: Colors.red,
-        items: <Bubble>[
-          Bubble(
-            title: "Saved",
-            iconColor: Colors.white,
-            bubbleColor: Colors.red,
-            icon: Icons.favorite,
-            titleStyle: TextStyle(fontSize: 16, color: Colors.white),
-            onPress: () {
-              Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Saved()))
-                  .then((value) => {setState(() {})});
-            },
-          ),
-          // Floating action menu item
-          Bubble(
-            title: "Search",
-            iconColor: Colors.white,
-            bubbleColor: Colors.blue,
-            icon: Icons.search,
-            titleStyle: TextStyle(fontSize: 16, color: Colors.white),
-            onPress: () {
-              Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Search()))
-                  .then((value) => {setState(() {})});
-            },
-          ),
-        ],
-      ),
+      floatingActionButton: data.isLoading
+          ? Container()
+          : FloatingActionBubble(
+              animation: _animation,
+              onPress: () => _animationController.isCompleted
+                  ? _animationController.reverse()
+                  : _animationController.forward(),
+              iconColor: Colors.white,
+              iconData: Icons.menu,
+              backGroundColor: Colors.red,
+              items: <Bubble>[
+                Bubble(
+                  title: "Saved",
+                  iconColor: Colors.white,
+                  bubbleColor: Colors.red,
+                  icon: Icons.favorite,
+                  titleStyle: TextStyle(fontSize: 16, color: Colors.white),
+                  onPress: () {
+                    Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Saved()))
+                        .then((value) => {setState(() {})});
+                  },
+                ),
+                // Floating action menu item
+                Bubble(
+                  title: "Search",
+                  iconColor: Colors.white,
+                  bubbleColor: Colors.blue,
+                  icon: Icons.search,
+                  titleStyle: TextStyle(fontSize: 16, color: Colors.white),
+                  onPress: () {
+                    Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Search()))
+                        .then((value) => {setState(() {})});
+                  },
+                ),
+              ],
+            ),
       body: Container(
         padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
         width: double.infinity,
